@@ -60,7 +60,7 @@
             android:layout_margin="16dp"
             android:tint="#FFFFFF"
             android:src="@android:drawable/ic_input_add"/>
-        
+
     </FrameLayout>
 
 </LinearLayout>
