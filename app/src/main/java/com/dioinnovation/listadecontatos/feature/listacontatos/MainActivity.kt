@@ -1,13 +1,17 @@
 package com.dioinnovation.listadecontatos.feature.listacontatos
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dioinnovation.listadecontatos.R
 import com.dioinnovation.listadecontatos.bases.BaseActivity
+import com.dioinnovation.listadecontatos.feature.contato.ContatoActivity
 import com.dioinnovation.listadecontatos.feature.listacontatos.adapter.ContatoAdapter
 import com.dioinnovation.listadecontatos.feature.listacontatos.model.ContatosVO
 import com.dioinnovation.listadecontatos.singleton.ContatoSingleton
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
@@ -19,7 +23,41 @@ class MainActivity : BaseActivity() {
         gerarListaDeContatos()
         setupToolBar(toolBar, "Lista de contatos",false)
         setupLisView()
+        setupOnClicks()
 
+    }
+
+    private fun setupOnClicks() {
+        fab.setOnClickListener { onClickAdd() }
+        ivBuscar.setOnClickListener { onClickBuscar() }
+    }
+
+    private fun onClickBuscar() {
+        val busca = etBuscar.text.toString()
+        var listaFiltrada: List<ContatosVO> = ContatoSingleton.lista
+        if(!busca.isNullOrEmpty()){
+            listaFiltrada = ContatoSingleton.lista.filter { contato ->
+                if (contato.nome.toLowerCase().contains(busca.toLowerCase())){
+                    return@filter true
+                }
+                return@filter false
+            }
+        }
+        adapter = ContatoAdapter(this,listaFiltrada) {onClickItemRecyclerView(it)}
+        recyclerView.adapter = adapter
+        Toast.makeText(this,"Buscando por $busca", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun onClickItemRecyclerView(index: Int) {
+        val intent = Intent(this,ContatoActivity::class.java)
+        intent.putExtra("index", index)
+        startActivity(intent)
+
+    }
+
+    private fun onClickAdd() {
+        val intent = Intent(this, ContatoActivity::class.java)
+        startActivity(intent)
     }
 
     private fun gerarListaDeContatos() {
@@ -38,6 +76,4 @@ class MainActivity : BaseActivity() {
         super.onResume()
         adapter?.notifyDataSetChanged()
     }
-
-
 }
