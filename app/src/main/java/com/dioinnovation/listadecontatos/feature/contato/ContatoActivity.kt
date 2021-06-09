@@ -2,8 +2,8 @@ package com.dioinnovation.listadecontatos.feature.contato
 
 import android.os.Bundle
 import android.view.View
-import com.dioinnovation.listadecontatos.bases.BaseActivity
 import com.dioinnovation.listadecontatos.R
+import com.dioinnovation.listadecontatos.bases.BaseActivity
 import com.dioinnovation.listadecontatos.feature.listacontatos.model.ContatosVO
 import com.dioinnovation.listadecontatos.singleton.ContatoSingleton
 import kotlinx.android.synthetic.main.activity_contato.*
@@ -16,14 +16,15 @@ class ContatoActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contato)
-        setupToolBar(toolBar, "Contato",true)
+        setupToolBar(toolBar, "Contato", true)
         setupContato()
         btnSalvarContato.setOnClickListener { onClickSalvarContato() }
     }
 
-    private fun setupContato(){
-        index = intent.getIntExtra("index",-1)
-        if (index == -1){
+
+    private fun setupContato() {
+        index = intent.getIntExtra("index", -1)
+        if (index == -1) {
             btnExcluirContato.visibility = View.GONE
             return
         }
@@ -31,7 +32,7 @@ class ContatoActivity : BaseActivity() {
         etTelefone.setText(ContatoSingleton.lista[index].telefone)
     }
 
-    private fun onClickSalvarContato(){
+    private fun onClickSalvarContato() {
         val nome = etNome.text.toString()
         val telefone = etTelefone.text.toString()
         val contato = ContatosVO(
@@ -39,16 +40,16 @@ class ContatoActivity : BaseActivity() {
             nome,
             telefone
         )
-        if(index == -1) {
+        if (index == -1) {
             ContatoSingleton.lista.add(contato)
-        }else{
-            ContatoSingleton.lista.set(index,contato)
+        } else {
+            ContatoSingleton.lista.set(index, contato)
         }
         finish()
     }
 
     fun onClickExcluirContato(view: View) {
-        if(index > -1){
+        if (index > -1) {
             ContatoSingleton.lista.removeAt(index)
             finish()
         }
