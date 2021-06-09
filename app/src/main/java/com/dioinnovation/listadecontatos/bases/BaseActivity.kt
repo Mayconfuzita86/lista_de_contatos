@@ -1,13 +1,11 @@
 package com.dioinnovation.listadecontatos.bases
 
-import android.icu.text.CaseMap
 import android.view.MenuItem
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
-import com.dioinnovation.listadecontatos.R
+import androidx.appcompat.widget.Toolbar
 
 open class BaseActivity : AppCompatActivity(){
-    protected fun setupToolBar(toolBar: androidx.appcompat.widget.Toolbar, title: String, navgationBack: Boolean) {
+    protected fun setupToolBar(toolBar: Toolbar, title: String, navgationBack: Boolean) {
         toolBar.title = title
         setSupportActionBar(toolBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(navgationBack)

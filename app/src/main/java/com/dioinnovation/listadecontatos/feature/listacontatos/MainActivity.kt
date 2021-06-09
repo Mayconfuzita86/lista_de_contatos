@@ -12,6 +12,7 @@ import com.dioinnovation.listadecontatos.feature.listacontatos.adapter.ContatoAd
 import com.dioinnovation.listadecontatos.feature.listacontatos.model.ContatosVO
 import com.dioinnovation.listadecontatos.singleton.ContatoSingleton
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : BaseActivity() {
 
@@ -22,9 +23,8 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         gerarListaDeContatos()
         setupToolBar(toolBar, "Lista de contatos",false)
-        setupLisView()
+        setupListView()
         setupOnClicks()
-
     }
 
     private fun setupOnClicks() {
@@ -37,7 +37,7 @@ class MainActivity : BaseActivity() {
         var listaFiltrada: List<ContatosVO> = ContatoSingleton.lista
         if(!busca.isNullOrEmpty()){
             listaFiltrada = ContatoSingleton.lista.filter { contato ->
-                if (contato.nome.toLowerCase().contains(busca.toLowerCase())){
+                if (contato.nome.lowercase(Locale.getDefault()).contains(busca.lowercase(Locale.getDefault()))){
                     return@filter true
                 }
                 return@filter false
@@ -52,7 +52,6 @@ class MainActivity : BaseActivity() {
         val intent = Intent(this,ContatoActivity::class.java)
         intent.putExtra("index", index)
         startActivity(intent)
-
     }
 
     private fun onClickAdd() {
@@ -66,7 +65,7 @@ class MainActivity : BaseActivity() {
         ContatoSingleton.lista.add(ContatosVO(3, "Marcos", "(12)9898-5678"))
     }
 
-    private fun setupLisView(){
+    private fun setupListView(){
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = ContatoAdapter(this,ContatoSingleton.lista) {onClickItemRecyclerView(it)}
         recyclerView.adapter = adapter
