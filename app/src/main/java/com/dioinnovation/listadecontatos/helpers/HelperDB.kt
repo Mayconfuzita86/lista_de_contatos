@@ -3,6 +3,7 @@ package com.dioinnovation.listadecontatos.helpers
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.dioinnovation.listadecontatos.feature.listacontatos.model.ContatosVO
 
 class HelperDB(
     context: Context
@@ -35,5 +36,21 @@ class HelperDB(
            db?.execSQL(DROP_TABLE)
         }
         onCreate(db)
+    }
+
+    fun buscarContatos(busca: String) : List<ContatosVO> {
+        val db = readableDatabase ?: return mutableListOf()
+        var lista = mutableListOf<ContatosVO>()
+        val sql = "SELECT * FROM $TABLE_NAME"
+        var cursor = db.rawQuery(sql, null) ?: return mutableListOf()
+        while(cursor.moveToNext()) {
+            var contato = ContatosVO(
+                cursor.getInt(cursor.getColumnIndex(COLUMNS_ID)),
+                cursor.getString(cursor.getColumnIndex(COLUMNS_NOME)),
+                cursor.getString(cursor.getColumnIndex(COLUMNS_TELEFONE))
+            )
+            lista.add(contato)
+        }
+        return lista
     }
 }

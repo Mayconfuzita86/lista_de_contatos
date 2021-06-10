@@ -6,7 +6,7 @@ import com.dioinnovation.listadecontatos.helpers.HelperDB
 class ContatoApplication : Application() {
 
     var helperDB: HelperDB? = null
-    private set
+    private set //protecao para sets externos
 
     override fun onCreate() {
         super.onCreate()

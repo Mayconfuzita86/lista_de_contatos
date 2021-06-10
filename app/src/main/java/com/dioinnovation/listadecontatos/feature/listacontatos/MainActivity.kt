@@ -34,15 +34,19 @@ class MainActivity : BaseActivity() {
 
     private fun onClickBuscar() {
         val busca = etBuscar.text.toString()
-        var listaFiltrada: List<ContatosVO> = ContatoSingleton.lista
-        if(!busca.isNullOrEmpty()){
+        var listaFiltrada: List<ContatosVO> = mutableListOf()
+
+
+
+        //BUSCA EM MEMORIA CACHE PELO SINGLETON
+        /*if(!busca.isNullOrEmpty()){
             listaFiltrada = ContatoSingleton.lista.filter { contato ->
                 if (contato.nome.lowercase(Locale.getDefault()).contains(busca.lowercase(Locale.getDefault()))){
                     return@filter true
                 }
                 return@filter false
             }
-        }
+        }*/
         adapter = ContatoAdapter(this,listaFiltrada) {onClickItemRecyclerView(it)}
         recyclerView.adapter = adapter
         Toast.makeText(this,"Buscando por $busca", Toast.LENGTH_SHORT).show()
