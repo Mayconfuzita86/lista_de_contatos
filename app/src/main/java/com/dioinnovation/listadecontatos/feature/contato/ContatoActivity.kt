@@ -3,6 +3,7 @@ package com.dioinnovation.listadecontatos.feature.contato
 import android.os.Bundle
 import android.view.View
 import com.dioinnovation.listadecontatos.R
+import com.dioinnovation.listadecontatos.application.ContatoApplication
 import com.dioinnovation.listadecontatos.bases.BaseActivity
 import com.dioinnovation.listadecontatos.feature.listacontatos.model.ContatosVO
 import com.dioinnovation.listadecontatos.singleton.ContatoSingleton
@@ -28,8 +29,13 @@ class ContatoActivity : BaseActivity() {
             btnExcluirContato.visibility = View.GONE
             return
         }
-        etNome.setText(ContatoSingleton.lista[index].nome)
-        etTelefone.setText(ContatoSingleton.lista[index].telefone)
+        var lista = ContatoApplication.instance.helperDB?.buscarContatos("$index",true) ?: return
+        var contato = lista.getOrNull(0) ?: return
+        etNome.setText(contato.nome)
+        etTelefone.setText(contato.telefone)
+
+//        etNome.setText(ContatoSingleton.lista[index].nome)
+//        etTelefone.setText(ContatoSingleton.lista[index].telefone)
     }
 
     private fun onClickSalvarContato() {
@@ -41,9 +47,10 @@ class ContatoActivity : BaseActivity() {
             telefone
         )
         if (index == -1) {
-            ContatoSingleton.lista.add(contato)
+//            ContatoSingleton.lista.add(contato)
+            ContatoApplication.instance.helperDB?.salvarContato(contato)
         } else {
-            ContatoSingleton.lista.set(index, contato)
+//            ContatoSingleton.lista.set(index, contato)
         }
         finish()
     }

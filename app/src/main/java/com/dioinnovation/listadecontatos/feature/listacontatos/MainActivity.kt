@@ -22,7 +22,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        gerarListaDeContatos()
+        //gerarListaDeContatos()
         setupToolBar(toolBar, "Lista de contatos",false)
         setupListView()
         setupOnClicks()
@@ -70,20 +70,24 @@ class MainActivity : BaseActivity() {
         startActivity(intent)
     }
 
-    private fun gerarListaDeContatos() {
-        ContatoSingleton.lista.add(ContatosVO(1, "Paulo", "(12)9999-0000"))
-        ContatoSingleton.lista.add(ContatosVO(2, "Pedro", "(12)8888-1234"))
-        ContatoSingleton.lista.add(ContatosVO(3, "Marcos", "(12)9898-5678"))
-    }
+    //MOCK TESTE
+//    private fun gerarListaDeContatos() {
+//        ContatoSingleton.lista.add(ContatosVO(1, "Paulo", "(12)9999-0000"))
+//        ContatoSingleton.lista.add(ContatosVO(2, "Pedro", "(12)8888-1234"))
+//        ContatoSingleton.lista.add(ContatosVO(3, "Marcos", "(12)9898-5678"))
+//    }
 
     private fun setupListView(){
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = ContatoAdapter(this,ContatoSingleton.lista) {onClickItemRecyclerView(it)}
-        recyclerView.adapter = adapter
+
+
+//       adapter = ContatoAdapter(this,ContatoSingleton.lista) {onClickItemRecyclerView(it)}
+//       recyclerView.adapter = adapter
     }
 
     override fun onResume() {
         super.onResume()
-        adapter?.notifyDataSetChanged()
+//        adapter?.notifyDataSetChanged()
+        onClickBuscar()
     }
 }
