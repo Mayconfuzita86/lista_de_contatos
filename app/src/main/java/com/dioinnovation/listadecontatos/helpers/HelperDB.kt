@@ -1,5 +1,6 @@
 package com.dioinnovation.listadecontatos.helpers
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -39,10 +40,16 @@ class HelperDB(
     }
 
     fun buscarContatos(busca: String) : List<ContatosVO> {
+        // salvarContato(ContatosVO(0,"NOME TESTE 2", "TEL TESTE 2" )) //teste 2
+        salvarContato(ContatosVO(0,"NOME TESTE 3", "TEL TESTE 3" ))
         val db = readableDatabase ?: return mutableListOf()
         var lista = mutableListOf<ContatosVO>()
         val sql = "SELECT * FROM $TABLE_NAME"
-        var cursor = db.rawQuery(sql, null) ?: return mutableListOf()
+        var cursor = db.rawQuery(sql, arrayOf())
+        if (cursor == null){
+            db.close()
+            return mutableListOf()
+        }
         while(cursor.moveToNext()) {
             var contato = ContatosVO(
                 cursor.getInt(cursor.getColumnIndex(COLUMNS_ID)),
@@ -51,6 +58,24 @@ class HelperDB(
             )
             lista.add(contato)
         }
+        db.close()
         return lista
+    }
+
+    fun salvarContato(contato : ContatosVO) {
+        val db = writableDatabase ?: return
+
+        //val sql = "INSERT INTO $TABLE_NAME($COLUMNS_NOME, $COLUMNS_TELEFONE) values (?, ?)"
+        //var array = arrayOf(contato.nome, contato.telefone)
+
+        var content = ContentValues()
+        content.put(COLUMNS_NOME, contato.nome)
+        content.put(COLUMNS_TELEFONE, contato.telefone)
+        db.insert(TABLE_NAME, null, content)
+
+        // db.execSQL(sql, array)
+
+        db.close()
+
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dioinnovation.listadecontatos.R
+import com.dioinnovation.listadecontatos.application.ContatoApplication
 import com.dioinnovation.listadecontatos.bases.BaseActivity
 import com.dioinnovation.listadecontatos.feature.contato.ContatoActivity
 import com.dioinnovation.listadecontatos.feature.listacontatos.adapter.ContatoAdapter
@@ -35,7 +36,11 @@ class MainActivity : BaseActivity() {
     private fun onClickBuscar() {
         val busca = etBuscar.text.toString()
         var listaFiltrada: List<ContatosVO> = mutableListOf()
-
+        try {
+            listaFiltrada = ContatoApplication.instance.helperDB?.buscarContatos(busca) ?: mutableListOf() //caso nao encontre, retorna mutablelistof() vazio
+        }catch (ex: Exception){
+            ex.printStackTrace()
+        }
 
 
         //BUSCA EM MEMORIA CACHE PELO SINGLETON
@@ -47,6 +52,8 @@ class MainActivity : BaseActivity() {
                 return@filter false
             }
         }*/
+
+
         adapter = ContatoAdapter(this,listaFiltrada) {onClickItemRecyclerView(it)}
         recyclerView.adapter = adapter
         Toast.makeText(this,"Buscando por $busca", Toast.LENGTH_SHORT).show()
