@@ -1,7 +1,7 @@
 # lista_de_contatos
  
 
- 🛠️ Curso - Desenvolvimento integrado de dados com SQLite no Android
+ 🛠️ Curso - Desenvolvimento integrado de dados com SQLLite no Android
  
  🎓 Instrutor -Vincius Fragelli - Arquiteto de Software Everis
  
