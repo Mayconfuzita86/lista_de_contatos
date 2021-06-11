@@ -1,11 +1,11 @@
 # lista_de_contatos
  
 
- 🛠️ Curso - Desenvolvimento integrado de dados com SQLLite no Android
+ 🛠️ Curso - Desenvolvimento integrado de dados com SQLite no Android
  
  🎓 Instrutor -Vincius Fragelli - Arquiteto de Software Everis
  
- 1️⃣ - App Lista de Contatos implementando banco de dados SQLLite nativo do Android
+ 1️⃣ - App Lista de Contatos implementando banco de dados SQLite nativo do Android
  
  ## Criação de contatos (Nome e Telefone)
  ## Lista de contatos
